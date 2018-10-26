@@ -1,8 +1,8 @@
 package sshwrapper
 
 import (
-	"github.com/EugenMayer/go-sshclient"
 	"fmt"
+	"github.com/eugenmayer/sshclient/scpwrapper"
 	"golang.org/x/crypto/ssh"
 	"net"
 	"time"
