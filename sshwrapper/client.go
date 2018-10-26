@@ -38,27 +38,6 @@ func (sshApi *SshApi) SessionDefault() (err error) {
 
 	sshApi.Session.Stdout = &sshApi.StdOut
 	sshApi.Session.Stderr = &sshApi.StdErr
-
-	//if sshApi.StdIn, err = sshApi.Session.StdinPipe(); err != nil {
-	//	go io.Copy(sshApi.StdIn, os.Stdin)
-	//} else {
-	//	sshApi.Session.Close()
-	//	return err
-	//}
-	//
-	//if sshApi.StdOut, err = sshApi.Session.StdoutPipe(); err != nil {
-	//	go io.Copy(os.Stdout, sshApi.StdOut)
-	//} else {
-	//	sshApi.Session.Close()
-	//	return err
-	//}
-	//
-	//if sshApi.StdErr, err = sshApi.Session.StderrPipe(); err != nil {
-	//	go io.Copy(os.Stderr, sshApi.StdErr)
-	//} else {
-	//	sshApi.Session.Close()
-	//	return err
-	//}
 	return nil
 }
 
