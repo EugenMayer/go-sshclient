@@ -2,7 +2,7 @@ package sshwrapper
 
 import (
 	"fmt"
-	"github.com/eugenmayer/sshclient/scpwrapper"
+	"github.com/eugenmayer/go-sshclient/scpwrapper"
 	"golang.org/x/crypto/ssh"
 	"net"
 	"time"
