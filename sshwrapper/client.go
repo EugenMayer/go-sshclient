@@ -1,7 +1,7 @@
 package sshwrapper
 
 import (
-	"code.kontextwork.de/ci/sshclient/scpwrapper"
+	"github.com/EugenMayer/go-sshclient"
 	"fmt"
 	"golang.org/x/crypto/ssh"
 	"net"
@@ -99,4 +99,4 @@ func (sshApi *SshApi) CopyFromRemote(source string, dest string) (err error) {
 	err = scpwrapper.CopyFromRemote(source, dest, sshApi.Session)
 	sshApi.Session.Close()
 	return err
-} 
+}
