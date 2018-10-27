@@ -100,7 +100,7 @@ func (sshApi *SshApi) Run(cmd string) (stdout string, stderr string, err error) 
 
 	err = sshApi.Session.Run(cmd)
 
-	sshApi.Session.Close()
+	sshApi.Close()
 	return  sshApi.GetStdOut(),sshApi.GetStdErr(), err
 }
 
@@ -111,7 +111,7 @@ func (sshApi *SshApi) CopyToRemote(source string, dest string) (err error) {
 		return err
 	}
 	err = scpwrapper.CopyToRemote(source, dest, sshApi.Session)
-	sshApi.Session.Close()
+	sshApi.Close()
 	return err
 }
 
@@ -123,6 +123,16 @@ func (sshApi *SshApi) CopyFromRemote(source string, dest string) (err error) {
 	}
 
 	err = scpwrapper.CopyFromRemote(source, dest, sshApi.Session)
-	sshApi.Session.Close()
+	sshApi.Close()
 	return err
+}
+
+func (sshApi *SshApi) Close() {
+	if sshApi.Session != nil {
+		sshApi.Session.Close()
+	}
+
+	if sshApi.Client != nil {
+		sshApi.Client.Close()
+	}
 }
