@@ -100,7 +100,7 @@ func (sshApi *SshApi) Run(cmd string) (stdout string, stderr string, err error) 
 
 	err = sshApi.Session.Run(cmd)
 
-	sshApi.Close()
+	sshApi.CleanClose()
 	return  sshApi.GetStdOut(),sshApi.GetStdErr(), err
 }
 
@@ -111,7 +111,7 @@ func (sshApi *SshApi) CopyToRemote(source string, dest string) (err error) {
 		return err
 	}
 	err = scpwrapper.CopyToRemote(source, dest, sshApi.Session)
-	sshApi.Close()
+	sshApi.CleanClose()
 	return err
 }
 
@@ -123,19 +123,12 @@ func (sshApi *SshApi) CopyFromRemote(source string, dest string) (err error) {
 	}
 
 	err = scpwrapper.CopyFromRemote(source, dest, sshApi.Session)
-	sshApi.Close()
+	sshApi.CleanClose()
 	return err
 }
 
-func (sshApi *SshApi) Close() (err error) {
-	if sshApi.Session != nil {
-		err = sshApi.Session.Close()
-	}
-
-	if err != nil {
-		return err
-	}
-
+func (sshApi *SshApi) CleanClose() (err error) {
+	// closing session should be wrong when all went good, see https://stackoverflow.com/a/42590388/3625317
 	if sshApi.Client != nil {
 		err = sshApi.Client.Close()
 	}
