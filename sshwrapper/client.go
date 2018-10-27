@@ -127,12 +127,18 @@ func (sshApi *SshApi) CopyFromRemote(source string, dest string) (err error) {
 	return err
 }
 
-func (sshApi *SshApi) Close() {
+func (sshApi *SshApi) Close() (err error) {
 	if sshApi.Session != nil {
-		sshApi.Session.Close()
+		err = sshApi.Session.Close()
+	}
+
+	if err != nil {
+		return err
 	}
 
 	if sshApi.Client != nil {
-		sshApi.Client.Close()
+		err = sshApi.Client.Close()
 	}
+
+	return err
 }
