@@ -35,7 +35,7 @@ if err != nil {
 
 If you want to use your local ssh agent
 
-```golang
+```go
 package mystuff
 
 import (
@@ -58,7 +58,7 @@ if err != nil {
 
 And if you want to use (why..please why..) password based connection
 
-```golang
+```go
 package mystuff
 
 import (
