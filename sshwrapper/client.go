@@ -89,18 +89,20 @@ func (sshApi *SshApi) GetStdErr() string {
 func (sshApi *SshApi) Run(cmd string) (stdout string, stderr string, err error) {
 	if sshApi.Session == nil {
 		if err = sshApi.ConnectAndSession(); err != nil {
+			sshApi.Close()
 			return "","", err
 		}
 
 		// this can actually still happen. TODO: document why
 		if sshApi.Session == nil {
+			sshApi.Close()
 			return "","", errors.New("could not start ssh session")
 		}
 	}
 
 	err = sshApi.Session.Run(cmd)
 
-	sshApi.CleanClose()
+	sshApi.Close()
 	return  sshApi.GetStdOut(),sshApi.GetStdErr(), err
 }
 
@@ -108,10 +110,11 @@ func (sshApi *SshApi) Run(cmd string) (stdout string, stderr string, err error) 
 func (sshApi *SshApi) CopyToRemote(source string, dest string) (err error) {
 	err = sshApi.ConnectAndSession()
 	if err != nil {
+		sshApi.Close()
 		return err
 	}
 	err = scpwrapper.CopyToRemote(source, dest, sshApi.Session)
-	sshApi.CleanClose()
+	sshApi.Close()
 	return err
 }
 
@@ -119,19 +122,23 @@ func (sshApi *SshApi) CopyToRemote(source string, dest string) (err error) {
 func (sshApi *SshApi) CopyFromRemote(source string, dest string) (err error) {
 	err = sshApi.ConnectAndSession()
 	if err != nil {
+		sshApi.Close()
 		return err
 	}
 
 	err = scpwrapper.CopyFromRemote(source, dest, sshApi.Session)
-	sshApi.CleanClose()
+	sshApi.Close()
 	return err
 }
 
-func (sshApi *SshApi) CleanClose() (err error) {
-	// closing session should be wrong when all went good, see https://stackoverflow.com/a/42590388/3625317
+func (sshApi *SshApi) Close() (err error) {
+	// we need to always reset our internal pointer to session since the ssh crypto library is not
+	// designed to reused it or "close" it at all .Close does close the connection but does not
+	// cleanup the session, more precisely .started is never set to false.
+	sshApi.Session = nil
+
 	if sshApi.Client != nil {
 		err = sshApi.Client.Close()
 	}
-	sshApi.Session = nil
 	return err
 }
