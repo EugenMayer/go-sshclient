@@ -12,12 +12,22 @@ import (
 // connect the ssh client and create a session, ready to go with commands ro scp
 func (sshApi *SshApi) ConnectAndSession() (err error) {
 	if client, err := sshApi.Connect(); err != nil {
+		if client != nil {
+			sshApi.Client.Close()
+		}
 		return err
 	} else {
 		sshApi.Client = client
 	}
 
-	return sshApi.SessionDefault()
+	err = sshApi.SessionDefault()
+	if err != nil {
+		if sshApi.Client != nil {
+			sshApi.Client.Close()
+		}
+		return err
+	}
+	return nil
 }
 
 // creates a default session with usual parameters
@@ -89,6 +99,7 @@ func (sshApi *SshApi) Run(cmd string) (stdout string, stderr string, err error) 
 	}
 
 	err = sshApi.Session.Run(cmd)
+
 	sshApi.Session.Close()
 	return  sshApi.GetStdOut(),sshApi.GetStdErr(), err
 }
