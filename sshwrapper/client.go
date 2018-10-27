@@ -95,7 +95,10 @@ func (sshApi *SshApi) Run(cmd string) (stdout string, stderr string, err error) 
 
 // scp a local file to a remote host
 func (sshApi *SshApi) CopyToRemote(source string, dest string) (err error) {
-	sshApi.ConnectAndSession()
+	err = sshApi.ConnectAndSession()
+	if err != nil {
+		return err
+	}
 	err = scpwrapper.CopyToRemote(source, dest, sshApi.Session)
 	sshApi.Session.Close()
 	return err
@@ -103,7 +106,11 @@ func (sshApi *SshApi) CopyToRemote(source string, dest string) (err error) {
 
 // scp a file from a remote host
 func (sshApi *SshApi) CopyFromRemote(source string, dest string) (err error) {
-	sshApi.ConnectAndSession()
+	err = sshApi.ConnectAndSession()
+	if err != nil {
+		return err
+	}
+
 	err = scpwrapper.CopyFromRemote(source, dest, sshApi.Session)
 	sshApi.Session.Close()
 	return err
