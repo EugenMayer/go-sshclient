@@ -132,6 +132,6 @@ func (sshApi *SshApi) CleanClose() (err error) {
 	if sshApi.Client != nil {
 		err = sshApi.Client.Close()
 	}
-
+	sshApi.Session = nil
 	return err
 }
