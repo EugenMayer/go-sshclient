@@ -83,7 +83,7 @@ func (sshApi *SshApi) Run(cmd string) (stdout string, stderr string, err error) 
 		}
 
 		// this can actually still happen. TODO: document why
-		if sshApi.Session != nil {
+		if sshApi.Session == nil {
 			return "","", errors.New("could not start ssh session")
 		}
 	}
