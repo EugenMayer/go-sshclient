@@ -1,6 +1,7 @@
 package sshwrapper
 
 import (
+	"errors"
 	"fmt"
 	"github.com/eugenmayer/go-sshclient/scpwrapper"
 	"golang.org/x/crypto/ssh"
@@ -79,6 +80,11 @@ func (sshApi *SshApi) Run(cmd string) (stdout string, stderr string, err error) 
 	if sshApi.Session == nil {
 		if err = sshApi.ConnectAndSession(); err != nil {
 			return "","", err
+		}
+
+		// this can actually still happen. TODO: document why
+		if sshApi.Session != nil {
+			return "","", errors.New("could not start ssh session")
 		}
 	}
 
