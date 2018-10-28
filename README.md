@@ -17,19 +17,22 @@ package mystuff
 
 import (
 	"github.com/eugenmayer/go-sshclient/sshwrapper"
+	"log"
 )
 
-sshApi := sshwrapper.SshApi{Host: "somehost",Port: 22, User: "root"}
-err := sshApi.DefaultSshPrivkeySetup(privkey)
-if err != nil {
-    log.Fatal(err)
-}
-
-stdout, stderr, err := sshApi.Run(cmd)
-if err != nil {
-    log.Print(stdout)
-    log.Print(stderr)
-    log.Fatal(err)
+func Run(cmd string) {
+    sshApi := sshwrapper.SshApi{Host: "somehost",Port: 22, User: "root"}
+    err := sshApi.DefaultSshPrivkeySetup("~/.ssh/id_rsa")
+    if err != nil {
+        log.Fatal(err)
+    }
+    
+    stdout, stderr, err := sshApi.Run(cmd)
+    if err != nil {
+        log.Print(stdout)
+        log.Print(stderr)
+        log.Fatal(err)
+    }
 }
 ```
 
@@ -40,19 +43,22 @@ package mystuff
 
 import (
 	"github.com/eugenmayer/go-sshclient/sshwrapper"
+	"log"
 )
 
-sshApi := sshwrapper.SshApi{Host: "somehost",Port: 22, User: "root"}
-err := sshApi.DefaultSshAgentSetup()
-if err != nil {
-    log.Fatal(err)
-}
-
-stdout, stderr, err := sshApi.Run(cmd)
-if err != nil {
-    log.Print(stdout)
-    log.Print(stderr)
-    log.Fatal(err)
+func Run(cmd string) {
+    sshApi := sshwrapper.SshApi{Host: "somehost",Port: 22, User: "root"}
+    err := sshApi.DefaultSshAgentSetup()
+    if err != nil {
+        log.Fatal(err)
+    }
+    
+    stdout, stderr, err := sshApi.Run(cmd)
+    if err != nil {
+        log.Print(stdout)
+        log.Print(stderr)
+        log.Fatal(err)
+    }
 }
 ```
 
@@ -63,19 +69,22 @@ package mystuff
 
 import (
 	"github.com/eugenmayer/go-sshclient/sshwrapper"
+	"log"
 )
 
-sshApi := sshwrapper.SshApi{Host: "somehost",Port: 22, User: "root"}
-err := sshApi.DefaultSshPasswordSetup("yoursshpassword")
-if err != nil {
-    log.Fatal(err)
-}
-
-stdout, stderr, err := sshApi.Run(cmd)
-if err != nil {
-    log.Print(stdout)
-    log.Print(stderr)
-    log.Fatal(err)
+func Run(cmd string) {
+    sshApi := sshwrapper.SshApi{Host: "somehost",Port: 22, User: "root", Password: "yourpassword"}
+    err := sshApi.DefaultSshPasswordSetup()
+    if err != nil {
+        log.Fatal(err)
+    }
+    
+    stdout, stderr, err := sshApi.Run(cmd)
+    if err != nil {
+        log.Print(stdout)
+        log.Print(stderr)
+        log.Fatal(err)
+    }
 }
 ```
 
