@@ -89,4 +89,10 @@ func Run(cmd string) {
 ```
 
 
- 
+## Tests
+
+You need docker
+
+```bash
+make run-tests
+```

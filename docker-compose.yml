@@ -1,0 +1,20 @@
+version: "2"
+
+services:
+  sshserver:
+    image: vimagick/openssh
+    hostname: alpine
+    entrypoint: /custom-entrypoint.sh
+    ports:
+      - "2301:22"
+    volumes:
+      - ./test/sshkeys:/root/.ssh/keys
+      - ./test/bin/custom-entrypoint.sh:/custom-entrypoint.sh
+  test:
+    image: eugenmayer/golang-builder:1.11
+    depends_on:
+      - sshserver
+    volumes:
+      - ./:/go/src/github.com/eugenmayer/go-sshclient
+    working_dir: /go/src/github.com/eugenmayer/go-sshclient
+    command: bash -c 'make test'
