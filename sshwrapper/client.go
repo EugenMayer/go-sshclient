@@ -121,7 +121,7 @@ func (sshApi *SshApi) CopyToRemote(source string, dest string) (err error) {
 		return err
 	}
 	err = scpwrapper.CopyToRemote(source, dest, sshApi.Session)
-	sshApi.Close()
+	defer sshApi.Close()
 	return err
 }
 

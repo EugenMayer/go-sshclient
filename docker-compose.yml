@@ -11,10 +11,10 @@ services:
       - ./test/sshkeys:/root/.ssh/keys
       - ./test/bin/custom-entrypoint.sh:/custom-entrypoint.sh
   test:
-    image: eugenmayer/golang-builder:1.11
+    image: eugenmayer/golang-builder:1.10
     environment:
-      - SSHHOSTNAME: "sshserver"
-      - SSHPORT: "22"
+      SSHHOSTNAME: "sshserver"
+      SSHPORT: "22"
     depends_on:
       - sshserver
     volumes:
