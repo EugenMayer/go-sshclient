@@ -43,7 +43,7 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:1629d30466fabfd508b9aaa0267ab0913dc9f9d4fef2bb8293c1b02bd846ff7e"
+  digest = "1:81fe238a08446da05b59ac061f97fbe75a6ef09a1eabf0ad9010c7a5b45dac44"
   name = "golang.org/x/crypto"
   packages = [
     "curve25519",
@@ -56,7 +56,7 @@
     "ssh/agent",
   ]
   pruneopts = "UT"
-  revision = "e84da0312774c21d64ee2317962ef669b27ffb41"
+  revision = "dab2b1051b5dd33a57e97c4774ed152e6a6c9a13"
 
 [solve-meta]
   analyzer-name = "dep"

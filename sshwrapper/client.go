@@ -64,7 +64,7 @@ func (sshApi *SshApi) Connect() (*ssh.Client, error) {
 		return nil, err
 	}
 
-	conn.SetReadDeadline(time.Now().Add(1 * time.Second))
+	conn.SetReadDeadline(time.Now().Add(sshApi.SshConfig.Timeout))
 	c, chans, reqs, err := ssh.NewClientConn(conn, addr, sshApi.SshConfig)
 	if err != nil {
 		return nil, err
@@ -100,6 +100,8 @@ func (sshApi *SshApi) Run(cmd string) (stdout string, stderr string, err error) 
 		}
 	}
 
+	sshApi.StdOut.Reset()
+	sshApi.StdErr.Reset()
 	err = sshApi.Session.Run(cmd)
 
 	sshApi.Close()
@@ -108,7 +110,12 @@ func (sshApi *SshApi) Run(cmd string) (stdout string, stderr string, err error) 
 
 // scp a local file to a remote host
 func (sshApi *SshApi) CopyToRemote(source string, dest string) (err error) {
-	err = sshApi.ConnectAndSession()
+	sshApi.Client, err = sshApi.Connect()
+	if err != nil {
+		sshApi.Close()
+		return err
+	}
+	sshApi.Session, err = sshApi.Client.NewSession()
 	if err != nil {
 		sshApi.Close()
 		return err
@@ -120,7 +127,12 @@ func (sshApi *SshApi) CopyToRemote(source string, dest string) (err error) {
 
 // scp a file from a remote host
 func (sshApi *SshApi) CopyFromRemote(source string, dest string) (err error) {
-	err = sshApi.ConnectAndSession()
+	sshApi.Client, err = sshApi.Connect()
+	if err != nil {
+		sshApi.Close()
+		return err
+	}
+	sshApi.Session, err = sshApi.Client.NewSession()
 	if err != nil {
 		sshApi.Close()
 		return err

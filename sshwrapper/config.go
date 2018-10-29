@@ -15,30 +15,51 @@ type SshApi struct {
 	Client    *ssh.Client
 	Session   *ssh.Session
 	User      string
+	Key      string
 	Password  string
 	Host      string
 	Port      int
-
+	Timeout   time.Duration
 	StdOut bytes.Buffer
 	StdErr bytes.Buffer
 }
 
-func DefaultApiSetup(user string, host string, port int, key string) (sshApi *SshApi, err error) {
+func NewSshApi(host string, port int,user string,  key string) (sshApi *SshApi) {
 	sshApi = &SshApi{
 		User: user,
+		Key: key,
 		Host: host,
 		Port: port,
+		Timeout: 5 * time.Second,
 	}
+	return sshApi
+}
+
+
+func DefaultSshApiSetup(host string, port int,user string,  key string) (sshApi *SshApi, err error) {
+	sshApi = NewSshApi(host,port,user,key)
 
 	if key == "" {
-		err = sshApi.DefaultSshAgentSetup()
+		err = sshApi.defaultSshAgentSetup()
 	} else {
-		err = sshApi.DefaultSshPrivkeySetup(key)
+		err = sshApi.defaultSshPrivkeySetup()
 	}
 	return sshApi, err
 }
 
-func (sshApi *SshApi) DefaultSshAgentSetup() (error) {
+
+func (sshApi *SshApi) DefaultSshPasswordSetup() (error) {
+	sshApi.SshConfig = &ssh.ClientConfig{
+		User:            sshApi.User,
+		Auth:            []ssh.AuthMethod{ssh.Password(sshApi.Password)},
+		Timeout:         sshApi.Timeout,
+		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
+	}
+
+	return nil
+}
+
+func (sshApi *SshApi) defaultSshAgentSetup() (error) {
 	sshAgent, err := SSHAgent()
 	if err != nil {
 		return err
@@ -47,32 +68,27 @@ func (sshApi *SshApi) DefaultSshAgentSetup() (error) {
 	sshApi.SshConfig = &ssh.ClientConfig{
 		User:            sshApi.User,
 		Auth:            []ssh.AuthMethod{sshAgent},
-		Timeout:         5 * time.Second,
+		Timeout:         sshApi.Timeout,
 		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
 	}
 	return nil
 }
 
-func (sshApi *SshApi) DefaultSshPasswordSetup() (error) {
-	sshApi.SshConfig = &ssh.ClientConfig{
-		User:            sshApi.User,
-		Auth:            []ssh.AuthMethod{ssh.Password(sshApi.Password)},
-		Timeout:         5 * time.Second,
-		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
-	}
 
-	return nil
-}
-
-func (sshApi *SshApi) DefaultSshPrivkeySetup(keyPath string) (error) {
-	privateKey, err := PrivateKeyFile(keyPath)
+func (sshApi *SshApi) defaultSshPrivkeySetup() (error) {
+	privateKey, err := LoadPrivateKeyFile(sshApi.Key)
 	if err != nil {
 		return err
+	}
+
+	timeout := sshApi.Timeout
+	if timeout == 0 {
+		timeout = 5 * time.Second
 	}
 	sshApi.SshConfig = &ssh.ClientConfig{
 		User:            sshApi.User,
 		Auth:            []ssh.AuthMethod{privateKey},
-		Timeout:         5 * time.Second,
+		Timeout:         sshApi.Timeout,
 		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
 	}
 
@@ -88,7 +104,7 @@ func SSHAgent() (ssh.AuthMethod, error) {
 	}
 }
 
-func PrivateKeyFile(file string) (ssh.AuthMethod, error) {
+func LoadPrivateKeyFile(file string) (ssh.AuthMethod, error) {
 	buffer, err := ioutil.ReadFile(file)
 	if err != nil {
 		return nil, err

@@ -5,6 +5,7 @@ import (
 	"os"
 )
 
+// scp a file from a remote server using ssh / scp
 func CopyFromRemote(source string, dest string, session *ssh.Session) error {
 	r, err := session.Output("dd if=" + source)
 	if err != nil {
@@ -15,7 +16,7 @@ func CopyFromRemote(source string, dest string, session *ssh.Session) error {
 	if err != nil {
 		return err
 	}
-	//write to local file
-	file.Write(r)
-	return nil
+
+	_, err = file.Write(r)
+	return err
 }

@@ -1,16 +1,18 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Client Tests" type="GoTestRunConfiguration" factoryName="Go Test">
     <module name="sshclient" />
-    <working_directory value="$PROJECT_DIR$" />
+    <working_directory value="$PROJECT_DIR$/test" />
     <go_parameters value="-i -tags netgo" />
     <envs>
       <env name="CGO_ENABLED" value="0" />
+      <env name="SSHHOSTNAME" value="localhost" />
+      <env name="SSHPORT" value="2301" />
     </envs>
     <framework value="gotest" />
-    <kind value="DIRECTORY" />
+    <kind value="FILE" />
     <package value="github.com/eugenmayer/go-sshclient" />
     <directory value="$PROJECT_DIR$" />
-    <filePath value="$PROJECT_DIR$" />
+    <filePath value="$PROJECT_DIR$/test/client_test.go" />
     <method v="2" />
   </configuration>
 </component>

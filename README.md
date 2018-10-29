@@ -21,8 +21,7 @@ import (
 )
 
 func Run(cmd string) {
-    sshApi := sshwrapper.SshApi{Host: "somehost",Port: 22, User: "root"}
-    err := sshApi.DefaultSshPrivkeySetup("~/.ssh/id_rsa")
+    sshApi, err := sshwrapper.DefaultSshApiSetup("somehost", 22, "root","~/.ssh/id_rsa")    
     if err != nil {
         log.Fatal(err)
     }
@@ -47,8 +46,7 @@ import (
 )
 
 func Run(cmd string) {
-    sshApi := sshwrapper.SshApi{Host: "somehost",Port: 22, User: "root"}
-    err := sshApi.DefaultSshAgentSetup()
+	sshApi, err := sshwrapper.DefaultSshApiSetup("somehost", 22, "root","")    
     if err != nil {
         log.Fatal(err)
     }
@@ -73,8 +71,10 @@ import (
 )
 
 func Run(cmd string) {
-    sshApi := sshwrapper.SshApi{Host: "somehost",Port: 22, User: "root", Password: "yourpassword"}
-    err := sshApi.DefaultSshPasswordSetup()
+    sshApi, err := sshwrapper.DefaultSshApiSetup("somehost", 22, "root","")
+    sshApi.Password = "test"
+    // now override the auth config with a password baed config
+    err = sshApi.DefaultSshPasswordSetup()
     if err != nil {
         log.Fatal(err)
     }
