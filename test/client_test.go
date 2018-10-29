@@ -77,9 +77,8 @@ func TestScpToRemote(t *testing.T) {
 	}
 	f.Close()
 
-	// copy to remove
+	// copy to remote
 	err = sshApi.CopyToRemote("/tmp/dummyfile", "/tmp/remotefile")
-	//err = sshApi.CopyToRemote("testfiles/somefile", "/tmp/remotefile")
 	assert.Nil(t, err, "No error during copying to the remote")
 	_, _, err = sshApi.Run("ls /tmp/remotefile")
 	assert.Nil(t, err, "File does exist remotely, so local to remote worked")
