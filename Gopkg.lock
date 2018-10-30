@@ -22,6 +22,14 @@
 
 [[projects]]
   branch = "master"
+  digest = "1:c76f2b195ebb30c79dd072311e2cd6dde56c451aa09b7a603bd3c76f700f50d1"
+  name = "github.com/eugenmayer/go-scp"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "3e45c32f0f005a3eb654602bf4116688a3628d3c"
+
+[[projects]]
+  branch = "master"
   digest = "1:400e113a367b511b9b09ca642ee11d9885485a93838526d697033af334a2fdde"
   name = "github.com/kballard/go-shellquote"
   packages = ["."]
@@ -66,6 +74,7 @@
   analyzer-version = 1
   input-imports = [
     "github.com/eugenmayer/go-exec/runner",
+    "github.com/eugenmayer/go-scp",
     "github.com/kballard/go-shellquote",
     "github.com/stretchr/testify/assert",
     "golang.org/x/crypto/ssh",

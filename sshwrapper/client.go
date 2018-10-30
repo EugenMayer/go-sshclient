@@ -132,13 +132,13 @@ func (sshApi *SshApi) CopyFromRemote(source string, dest string) (err error) {
 		sshApi.Close()
 		return err
 	}
-	sshApi.Session, err = sshApi.Client.NewSession()
-	if err != nil {
-		sshApi.Close()
-		return err
-	}
+	//sshApi.Session, err = sshApi.Client.NewSession()
+	//if err != nil {
+	//	sshApi.Close()
+	//	return err
+	//}
 
-	err = scpwrapper.CopyFromRemote(source, dest, sshApi.Session)
+	err = scpwrapper.CopyFromRemote(source, dest, sshApi.Client)
 	sshApi.Close()
 	return err
 }
