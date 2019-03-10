@@ -11,7 +11,7 @@ services:
       - ./test/sshkeys:/root/.ssh/keys
       - ./test/bin/custom-entrypoint.sh:/custom-entrypoint.sh
   test:
-    image: eugenmayer/golang-builder:1.11
+    image: eugenmayer/golang-builder
     environment:
       SSHHOSTNAME: "sshserver"
       SSHPORT: "22"
@@ -20,4 +20,4 @@ services:
     volumes:
       - ./:/go/src/github.com/eugenmayer/go-sshclient
     working_dir: /go/src/github.com/eugenmayer/go-sshclient
-    command: bash -c 'make test'
+    command: bash -c 'CGO_ENABLED=0 go test -tags netgo test/*.go'

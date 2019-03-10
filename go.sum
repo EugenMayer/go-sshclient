@@ -1,0 +1,14 @@
+github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
+github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
+github.com/eugenmayer/go-exec v0.0.0-20181029141239-eedf5ed226c0 h1:2KE7lO1/aFT/AHsVI0VMg+//rr8cD48ZoJwPPgHl4N8=
+github.com/eugenmayer/go-exec v0.0.0-20181029141239-eedf5ed226c0/go.mod h1:bOJdUiOKk07b2LnAi6ZMD60bkNRS39fIOC4RER+FBCk=
+github.com/eugenmayer/go-scp v0.0.0-20181030124448-3e45c32f0f00 h1:k6Hsc07p920olJVj1YQ4L1tvuWwZyXKfO//fxusNryE=
+github.com/eugenmayer/go-scp v0.0.0-20181030124448-3e45c32f0f00/go.mod h1:35cjeDnsyDLJg81QAhuc4zW0ImdKjc90Jpj5LEu0uiU=
+github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51 h1:Z9n2FFNUXsshfwJMBgNA0RU6/i7WVaAegv3PtuIHPMs=
+github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51/go.mod h1:CzGEWj7cYgsdH8dAjBGEr58BoE7ScuLd+fwFZ44+/x8=
+github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
+github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
+github.com/stretchr/testify v1.2.2 h1:bSDNvY7ZPG5RlJ8otE/7V6gMiyenm9RtJ7IUVIAoJ1w=
+github.com/stretchr/testify v1.2.2/go.mod h1:a8OnRcib4nhh0OaRAV+Yts87kKdq0PP7pXfy6kDkUVs=
+golang.org/x/crypto v0.0.0-20181029103014-dab2b1051b5d h1:5JyY8HlzxzYI+qHOOciM8s2lJbIEaefMUdtYt7dRDrg=
+golang.org/x/crypto v0.0.0-20181029103014-dab2b1051b5d/go.mod h1:6SG95UA2DQfeDnfUPMdvaQW0Q7yPrPDi9nlGo2tz2b4=
