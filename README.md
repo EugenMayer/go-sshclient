@@ -21,7 +21,7 @@ import (
 )
 
 func Run(cmd string) {
-    sshApi, err := sshwrapper.DefaultSshApiSetup("somehost", 22, "root","~/.ssh/id_rsa")    
+    sshApi, err := sshwrapper.DefaultSshApiSetup("somehost", 22, "root","/home/me/.ssh/id_rsa")    
     if err != nil {
         log.Fatal(err)
     }
