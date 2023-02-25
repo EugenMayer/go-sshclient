@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/eugenmayer/go-exec v1.3.0
-	github.com/eugenmayer/go-scp v1.1.0
+	github.com/eugenmayer/go-scp v1.1.1
 	github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51
 	github.com/stretchr/testify v1.8.1
 	golang.org/x/crypto v0.6.0
