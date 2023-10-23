@@ -4,7 +4,8 @@ init:
 	go mod vendor
 
 update:
-	go get -u
+	go get -u ./scpwrapper/
+	go get -u ./sshwrapper/
 	go mod tidy
 
 run-tests:
